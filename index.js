@@ -1,11 +1,19 @@
-function isValidBST(root) {
-  let prev = null;
-  return inorder(root);
-  function inorder(node) {
-    if (!node) return true;
-    if (!inorder(node.left)) return false;
-    if (prev !== null && node.val <= prev) return false;
-    prev = node.val;
-    return inorder(node.right);
+function deserialize(data) {
+  if (!data.length) return null;
+  const root = new TreeNode(data.shift());
+  const queue = [root];
+  while (queue.length) {
+    const node = queue.shift();
+    const leftVal = data.shift();
+    if (leftVal !== undefined) {
+      node.left = new TreeNode(leftVal);
+      queue.push(node.left);
+    }
+    const rightVal = data.shift();
+    if (rightVal !== undefined) {
+      node.right = new TreeNode(rightVal);
+      queue.push(node.right);
+    }
   }
+  return root;
 }
